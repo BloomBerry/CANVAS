@@ -25,17 +25,19 @@
 
 <b>Summary</b>: This repository contains the experiment code accompanying the paper CANVAS: A Benchmark for Vision-Language Models on Tool-Based UI Design (AAAI 2026). CANVAS designed to evaluate a VLM's capability to generate a UI design with tool invocations in two tasks: Design Replication and Design Modification.
 
-
-
 # Setup
+
 ### Environments
+
 We Tested in the following environment:
+
 - OS: Windows 11 (WSL2) and MacOS
 - Node.js: v18.20.8
 - Python: 3.12.9
 - Figma Desktop + Plugin loaded from `manifest.json` (For WSL2, you should copy the `dist` directory locally to Windows and imported it into Figma.)
 
 ### Quick Setup
+
 You can use the automated setup script to install all dependencies:
 
 ```bash
@@ -43,6 +45,7 @@ You can use the automated setup script to install all dependencies:
 ```
 
 **What `setup.sh` does:**
+
 - Checks prerequisites (conda, node, npm)
 - Creates Python conda environment (`canvasbench`)
 - Installs Node.js dependencies for all services (socket_server, figma_plugin, mcp_server, mcp_client)
@@ -53,6 +56,7 @@ You can use the automated setup script to install all dependencies:
 **After running `setup.sh`, you still need to:**
 
 1. **Configure API keys**: Edit `.env` file and add your API keys
+
    ```bash
    # Edit .env file with your actual API keys
    nano .env  # or use your preferred editor
@@ -63,10 +67,11 @@ You can use the automated setup script to install all dependencies:
    - Place it in the `dataset/` directory
 
 3. **Start services** (in separate terminals):
+
    ```bash
    # Terminal 1: Socket Server
    cd src/socket_server && npm run dev
-   
+
    # Terminal 2: MCP Client
    cd src/mcp_client && npm run dev -- --port=3001
    ```
@@ -86,6 +91,7 @@ You can use the automated setup script to install all dependencies:
 <br/>
 
 **1. Socket Server**
+
 ```bash
 # (terminal 1)
 cd src/socket_server
@@ -94,6 +100,7 @@ npm run dev
 ```
 
 **2. Figma Plugin**
+
 ```bash
 # (terminal 2)
 cd src/figma_plugin
@@ -101,6 +108,7 @@ npm install && npm run build
 ```
 
 **3. MCP Server**
+
 ```bash
 # (terminal 3)
 cd src/mcp_server
@@ -108,6 +116,7 @@ npm install && npm run build
 ```
 
 **4. MCP Client**
+
 ```bash
 # (terminal 4)
 cd src/mcp_client
@@ -115,10 +124,12 @@ npm install
 npx puppeteer browsers install chrome
 npm run dev -- --port=3001
 ```
-* Your MCP client GUI available at localhost:3001
-* You can select a channel to connect.
+
+- Your MCP client GUI available at localhost:3001
+- You can select a channel to connect.
 
 **5. Load Figma Plugin**
+
 - Open Figma Desktop
 - Go to: **Figma logo → Plugins → Development**
 - Load manifest: `src/figma_plugin/dist/manifest.json`
@@ -126,6 +137,7 @@ npm run dev -- --port=3001
 - Make sure to choose the same channel with your MCP Client.
 
 **(Outdated) Debug MCP Server**
+
 ```bash
 cd src/mcp_server
 npx @modelcontextprotocol/inspector dist/server.js
@@ -134,9 +146,11 @@ npx @modelcontextprotocol/inspector dist/server.js
 </details>
 
 ### 2. Dataset
+
 Currently, we provide the [CANVAS dataset](https://huggingface.co/datasets/seooyxx/canvas). If you use this dataset, please cite our [BibTex](#bibtex).
 
 To follow the basic experiment, download this dataset and organize the locations as shown below:
+
 ```
 canvas
 ├── dataset                  # HERE!
@@ -162,17 +176,20 @@ canvas
 Required environment variables depend on the model provider you want to use:
 
 **OpenAI (for `gpt-4o`, `gpt-4.1`):**
+
 ```bash
 export OPENAI_API_KEY="your_openai_key"
 ```
 
 **Google Cloud (for `gemini-2.5-flash`, `gemini-2.5-pro`):**
+
 ```bash
 export GOOGLE_APPLICATION_CREDENTIALS="your_gemini_api_key"
 export GOOGLE_API_KEY="your_api_key"
 ```
 
 **Amazon Bedrock (for `claude-3-5-sonnet`):**
+
 ```bash
 # pip install boto3 awscli
 AWS_REGION=us-east-1
@@ -190,7 +207,8 @@ conda activate canvasbench-eval
 
 ### UI Replication Experiments
 
-**Single Agent (Code):**
+**Single-Turn Agent (Code):**
+
 ```bash
 python -m experiments.run_replication_code_experiment \
   --config-name code-replication \
@@ -202,6 +220,7 @@ python -m experiments.run_replication_code_experiment \
 ```
 
 **Arguments:**
+
 - `--config-name`: Experiment configuration name (e.g., `code-replication`, `react-replication`, `single-replication`, `react-modification`)
 - `--model`: Model to use. Options: `gpt-4o`, `gpt-4.1`, `gpt-4o-mini`, `o3`, `claude-3-5-sonnet`, `gemini-2.5-flash`, `gemini-2.5-pro`.
 - `--channel`: Channel name from config.yaml. Options: `channel_1` through `channel_7`. You need to change the api_base_url in `src/config/expr/{your_expr}.yaml` file.
@@ -214,9 +233,10 @@ python -m experiments.run_replication_code_experiment \
 - `--variants`: (optional, replication_only) Comma-separated list of input variants. Options: `image_only`, `text_level_1`, `text_level_2`
 - `--task`: (optional, modification only) Specific tasks to run (e.g., `task-1`, `task-2`). Runs all if not specified
 
-**Single Agent (Canvas):**
+**Single-Turn Agent (Tool):**
+
 ```bash
-python -m experiments.run_replication_canvas_experiment \
+python -m experiments.run_replication_experiment \
   --config-name single-replication \
   --model gpt-4.1 \
   --variants image_only \
@@ -225,9 +245,10 @@ python -m experiments.run_replication_canvas_experiment \
   --auto
 ```
 
-**Multi Agent (ReAct):**
+**ReAct Agent (Tool):**
+
 ```bash
-python -m experiments.run_replication_canvas_experiment \
+python -m experiments.run_replication_experiment \
   --config-name react-replication \
   --model gpt-4.1 \
   --variants image_only \
@@ -237,10 +258,12 @@ python -m experiments.run_replication_canvas_experiment \
 ```
 
 ### UI Modification Experiments
-* Task 1, 2, 3 are available.
-* For descriptions of each task, please refer to the paper and the huggingface repository.
 
-**Multi Agent (ReAct):**
+- Task 1, 2, 3 are available.
+- For descriptions of each task, please refer to the paper and the huggingface repository.
+
+**ReAct Agent (Tool):**
+
 ```bash
 python -m experiments.run_modification_experiment \
   --config-name react-modification \
@@ -401,15 +424,17 @@ This code is mainly built upon [Talk-to-Figma](https://github.com/grab/cursor-ta
 MIT
 
 ## BibTeX
+
 If you use canvas repository or dataset, please cite:
+
 ```bibtex
 @article{jeong2025canvas,
-      title={CANVAS: A Benchmark for Vision-Language Models on Tool-Based User Interface Design}, 
+      title={CANVAS: A Benchmark for Vision-Language Models on Tool-Based User Interface Design},
       author={Daeheon Jeong and Seoyeon Byun and Kihoon Son and Dae Hyun Kim and Juho Kim},
       year={2025},
       eprint={2511.20737},
       archivePrefix={arXiv},
       primaryClass={cs.CV},
-      url={https://arxiv.org/abs/2511.20737}, 
+      url={https://arxiv.org/abs/2511.20737},
 }
 ```

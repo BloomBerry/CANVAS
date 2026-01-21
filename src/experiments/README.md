@@ -1,5 +1,7 @@
 ## Running Experiments
+
 Required environment variables:
+
 ```bash
 export OPENAI_API_KEY="your_openai_key"
 ```
@@ -12,7 +14,8 @@ conda activate canvasbench-eval
 
 ### UI Replication Experiments
 
-**Single Agent (Code):**
+**Single-Turn Agent (Code):**
+
 ```bash
 python -m experiments.run_replication_code_experiment \
   --config-name code-replication \
@@ -23,9 +26,10 @@ python -m experiments.run_replication_code_experiment \
   --auto
 ```
 
-**Single Agent (Canvas):**
+**Single-Turn Agent (Tool):**
+
 ```bash
-python -m experiments.run_replication_canvas_experiment \
+python -m experiments.run_replication_experiment \
   --config-name single-replication \
   --model gpt-4.1 \
   --variants image_only \
@@ -34,9 +38,10 @@ python -m experiments.run_replication_canvas_experiment \
   --auto
 ```
 
-**Multi Agent (ReAct):**
+**ReAct Agent (Tool):**
+
 ```bash
-python -m experiments.run_replication_canvas_experiment \
+python -m experiments.run_replication_experiment \
   --config-name react-replication \
   --model gpt-4.1 \
   --variants image_only \
@@ -46,21 +51,12 @@ python -m experiments.run_replication_canvas_experiment \
 ```
 
 ### UI Modification Experiments
-* Task 1, 2, 3 are available.
-* For descriptions of each task, please refer to the paper and the huggingface repository.
 
-**Single Agent (Canvas):**
-```bash
-python -m experiments.run_modification_experiment \
-  --config-name react-modification \
-  --model gemini-2.5-flash \
-  --channel channel_1 \
-  --task task-2 \
-  --agent-type single_modification \
-  --auto
-```
+- Task 1, 2, 3 are available.
+- For descriptions of each task, please refer to the paper and the huggingface repository.
 
-**Multi Agent (ReAct):**
+**ReAct Agent (Tool):**
+
 ```bash
 python -m experiments.run_modification_experiment \
   --config-name react-modification \
