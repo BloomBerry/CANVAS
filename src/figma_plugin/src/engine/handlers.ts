@@ -4,6 +4,7 @@ import * as OperationCommands from './commands/operationCommands';
 import * as StyleCommands from './commands/styleCommands';
 import * as TextCommands from './commands/textCommands';
 import * as InspectionCommands from './commands/inspectionCommands';
+import * as SlideCommands from './commands/slideCommands';
 
 // Dispatch MCP command names to engine implementations.
 export async function handleCommand(command: string, params: any) {
@@ -107,6 +108,27 @@ export async function handleCommand(command: string, params: any) {
       return await LayoutCommands.setLayoutSizing(params);
     case 'set_item_spacing':
       return await LayoutCommands.setItemSpacing(params);
+
+    case 'create_slide':
+      return await SlideCommands.createSlide(params);
+    case 'delete_slide':
+      return await SlideCommands.deleteSlide(params);
+    case 'clone_slide':
+      return await SlideCommands.cloneSlide(params);
+    case 'focus_slide':
+      return await SlideCommands.focusSlide(params);
+    case 'get_focused_slide':
+      return await SlideCommands.getFocusedSlide();
+    case 'get_slide_grid':
+      return await SlideCommands.getSlideGrid();
+    case 'get_all_slides':
+      return await SlideCommands.getAllSlides();
+    case 'set_slide_transition':
+      return await SlideCommands.setSlideTransition(params);
+    case 'skip_slide':
+      return await SlideCommands.skipSlide(params);
+    case 'get_slide_properties':
+      return await SlideCommands.getSlideProperties(params);
 
     default:
       throw new Error(`Unknown command: ${command}`);

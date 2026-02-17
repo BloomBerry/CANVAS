@@ -45,6 +45,14 @@ models:
     output_cost: 0.015
     max_turns: 1
     max_tokens: 8192
+  claude-3-5-sonnet-api:
+    provider: anthropic
+    name: claude-3-5-sonnet-20241022
+    temperature: 0.0
+    input_cost: 0.003
+    output_cost: 0.015
+    max_turns: 1
+    max_tokens: 8192
   gemini-2.5-flash:
     provider: google
     name: "models/gemini-2.5-flash"

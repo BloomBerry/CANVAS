@@ -9,7 +9,8 @@ import { logger } from "./utils/helpers";
 
 // Setup variables and configurations
 
-dotenv.config();
+// Load .env from project root (3 levels up from src/mcp_client/src)
+dotenv.config({ path: path.resolve(__dirname, "../../../.env") });
 const portArg = process.argv.find((arg) => arg.startsWith("--port="));
 const PORT = portArg ? parseInt(portArg.split("=")[1], 10) : 3000;
 

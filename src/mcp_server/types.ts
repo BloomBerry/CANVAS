@@ -140,4 +140,16 @@ export type FigmaCommand =
   | "check_connection_status"
   | "get_result_image"
   | "export_json"
-  | "import_json";
+  | "import_json"
+  | "create_slide"
+  | "delete_slide"
+  | "clone_slide"
+  | "focus_slide"
+  | "get_focused_slide"
+  | "get_slide_grid"
+  | "get_all_slides"
+  | "set_slide_transition"
+  | "skip_slide"
+  | "get_slide_properties"
+  | "get_slide_speaker_notes"
+  | "set_slide_speaker_notes";

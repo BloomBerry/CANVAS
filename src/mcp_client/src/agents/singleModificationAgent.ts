@@ -56,7 +56,7 @@ export class SingleModificationAgent extends AgentInstance {
     );
     const response = await params.tools.callTool(loadJsonRequest);
     if (response.isError) {
-      const errorMessage = response.content.map((c) => c.text).join("\n");
+      const errorMessage = response.content.map((c) => (c as any).text).join("\n");
       throw new Error(
         `Failed to load base JSON: ${errorMessage || "Unknown error"}`
       );

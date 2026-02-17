@@ -95,9 +95,10 @@ export enum ToolResponseFormat {
   RESOURCE = "resource",
 }
 
-export type CallToolRequestParams = CallToolRequest["params"];
-// id: string;
-// arguments: Record<string, any>
+export type CallToolRequestParams = CallToolRequest["params"] & {
+  id?: string;
+  call_id?: string;
+};
 
 export interface ModelConfig {
   modelName: string;
@@ -151,6 +152,7 @@ export interface MulterRequest extends Request {
 export enum ModelProvider {
   OPENAI = "openai",
   AMAZON = "amazon",
+  ANTHROPIC = "anthropic",
   GOOGLE = "google",
   OLLAMA = "ollama",
 }

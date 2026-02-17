@@ -1,8 +1,8 @@
-agent_type: react_replication
+agent_type: single_figma_slide_agent
 
-benchmark_dir: ../dataset/benchmarks/replication_gt
-results_dir: ../dataset/results/replication_gen/multi_react
-batches_config_path: ../dataset/batches/replication/batches.yaml
+benchmark_dir: ../dataset/benchmarks/figma_slide_gt
+results_dir: ../dataset/results/figma_slide/single_turn
+batches_config_path: ../dataset/batches/figma_slide/batches.yaml
 
 channels:
   channel_1:

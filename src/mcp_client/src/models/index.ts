@@ -1,5 +1,6 @@
 import { OpenAIModel } from "./openaiModel";
 import { BedrockModel } from "./bedrockModel";
+import { AnthropicModel } from "./anthropicModel";
 import { ModelConfig, ModelProvider } from "../types";
 import { ModelInstance } from "./modelInstance";
 import { GoogleModel } from "./googleModel";
@@ -12,6 +13,8 @@ export function createModel(modelConfig: ModelConfig): ModelInstance {
       return new OpenAIModel(modelConfig);
     case ModelProvider.AMAZON:
       return new BedrockModel(modelConfig);
+    case ModelProvider.ANTHROPIC:
+      return new AnthropicModel(modelConfig);
     case ModelProvider.GOOGLE:
       return new GoogleModel(modelConfig);
     case ModelProvider.OLLAMA: {

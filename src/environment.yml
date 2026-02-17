@@ -3,6 +3,8 @@ channels:
   - conda-forge
   - defaults
 dependencies:
+  - python=3.12
+  - cmake  # for building pyarrow etc. if needed
   - pip:
       - annotated-types==0.6.0
       - async-timeout==4.0.3
